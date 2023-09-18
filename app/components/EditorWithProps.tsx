@@ -18,16 +18,19 @@ import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, divider } from "@nextui-org/react";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import Search from "./Search";
 
 function EditorWithProps(props: any) {
   const [focus, setFocus] = useState(true);
+  const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
   const supabase = createClientComponentClient();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     setContent(props.content[0].content);
-  }, []);
+    console.log("content updated" + content);
+  }, [setContent]);
 
   useEffect(() => {
     const handleKeyDown = async (e: any) => {
@@ -122,6 +125,7 @@ function EditorWithProps(props: any) {
         ]}
       />
       <SnackbarProvider />
+      <Search open={open} />
     </div>
   );
 }

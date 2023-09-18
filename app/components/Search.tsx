@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { IconSearch } from "@tabler/icons-react";
 import {
   Modal,
@@ -18,11 +18,30 @@ import {
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { IconLink } from "@tabler/icons-react";
 
-export default function Search() {
+export default function Search(props: any) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [data, setData] = React.useState<any[]>([]);
   const [search, setSearch] = React.useState<string>("");
   const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    const handleKeyDown = async (e: any) => {
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault(); // Evita el comportamiento predeterminado del navegador
+
+        if (isOpen) {
+          onOpenChange(false);
+        } else {
+          onOpenChange(true);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onOpenChange]);
 
   const handleSearch = async (searchValue: any) => {
     setSearch(searchValue);
