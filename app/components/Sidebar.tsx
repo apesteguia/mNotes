@@ -1,42 +1,33 @@
+"use client";
 import { useEffect, useState } from "react";
-import {
-  Accordion,
-  AccordionItem,
-  Chip,
-  Kbd,
-  Tooltip,
-} from "@nextui-org/react";
+import { Chip, Kbd, Tooltip } from "@nextui-org/react";
 import { IconSearch } from "@tabler/icons-react";
 import { IconSettings } from "@tabler/icons-react";
 import { IconSquareRoundedPlusFilled } from "@tabler/icons-react";
 import { IconNotes } from "@tabler/icons-react";
 import "../styles/sidebar.css";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import NotesAccordion from "./NotesAccordion";
 
 export default function Sidebar() {
-  const [username, setUsername] = useState<string | undefined>(undefined);
+  const [username, setUsername] = useState<any[]>([]);
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const get_username = async () => {
-      const fetchedUsername = "mikel";
-      setUsername(fetchedUsername);
+      const fetchedUsername = await supabase.from("notes").select("user");
+      const data = fetchedUsername.data;
+      console.log(data);
+      if (data) setUsername(data[0].user.split("-")[0]);
     };
 
     get_username();
   }, []);
 
-  const itemClasses = {
-    base: "py-0 w-full",
-    title: "font-small text-small text-zinc-400 outline-none border-none",
-    trigger:
-      "px-2 py-0 data-[hover=true]:bg-default-100 ml-1 rounded-lg h-14 flex items-center",
-    indicator: "text-medium",
-    content: "text-small px-2",
-  };
-
   return (
     <div className="fixed h-full resize-x min-w-[240px] sidebar border border-zinc-700 flex flex-col ">
       <div className="flex items-center mt-2 ml-4 gap-2">
-        <Chip>{username ? username[0].toUpperCase() : "M"}</Chip>
+        <Chip>N</Chip>
         <h1 className="text-sm flex gap-1">
           Notes of <p className=" capitalize">{username || "Loading..."}</p>{" "}
         </h1>
@@ -89,24 +80,7 @@ export default function Sidebar() {
           </div>
         </Tooltip>
       </div>
-
-      <div className="text-sm">
-        <Accordion
-          showDivider={false}
-          itemClasses={itemClasses}
-          isCompact
-          className="text-sm"
-        >
-          <AccordionItem subtitle="" className="text-sm" title="Your Notes">
-            <div className="flex items-baseline  flex-col">
-              <div className="flex gap-2 h-[20px]">
-                <IconNotes size={14} />
-                <button>adios</button>
-              </div>
-            </div>
-          </AccordionItem>
-        </Accordion>
-      </div>
+      <NotesAccordion />
     </div>
   );
 }
