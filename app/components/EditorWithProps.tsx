@@ -18,9 +18,29 @@ import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "@nextui-org/react";
 
-function Editor(props: any) {
-  const [visible, setVisible] = useState<Boolean>(false);
+function EditorWithProps(props: any) {
   const [focus, setFocus] = useState(true);
+  const [content, setContent] = useState("");
+  const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    const handleKeyDown = async (e: any) => {
+      if (e.ctrlKey && e.key === "s") {
+        e.preventDefault();
+        const date = new Date();
+        const res = await supabase
+          .from("notes")
+          .update([{ content: content, last_edited: date.toDateString() }])
+          .eq("id", props.content[0].id);
+        console.log("bien", content);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [content]);
 
   const simpleSandpackConfig: SandpackConfig = {
     defaultPreset: "dark",
@@ -42,16 +62,30 @@ function Editor(props: any) {
       className="fixed right-0 h-full flex overflow-y-auto w-full justify-center"
       style={{ width: "calc(100% - 170px)" }}
     >
-      {!visible ? (
-        <p className="z-0 absolute mt-[40px] mr-[550px] text-zinc-500">
-          Start tying something...
+      <div className="absolute left-[100px] mt-5">
+        <p className="font-bold">{props.content[0].title}</p>
+        <p className="text-sm text-default-400">
+          Last edited:{" "}
+          {new Date(props.content[0].last_edited).toLocaleDateString("es-ES", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          })}
         </p>
-      ) : null}
+      </div>
+
       <MDXEditor
         placeholder=""
+        onChange={(e) => {
+          setContent(e);
+          console.log(content);
+        }}
         autoFocus={focus}
         className="z-10 w-[730px] h-full indent-2 flex"
-        markdown=""
+        markdown={props.content[0].content}
         contentEditableClassName="editor dark-theme darkTheme"
         plugins={[
           tablePlugin(),
@@ -72,4 +106,4 @@ function Editor(props: any) {
   );
 }
 
-export default Editor;
+export default EditorWithProps;
