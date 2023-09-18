@@ -26,12 +26,6 @@ export default function Sidebar() {
     get_username();
   }, []);
 
-  const handleId = (id: string) => {
-    if (id != null) {
-      setTriggerEditor(id);
-    }
-  };
-
   return (
     <div className="fixed h-full resize-x min-w-[240px] sidebar border border-zinc-700 flex flex-col ">
       <div className="flex items-center mt-2 ml-4 gap-2">
@@ -88,7 +82,7 @@ export default function Sidebar() {
           </div>
         </Tooltip>
       </div>
-      <NotesAccordion onNoteSelected={handleId} />
+      <NotesAccordion />
       <Editor triggerEditor={triggerEditor} />
     </div>
   );

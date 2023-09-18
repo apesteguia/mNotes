@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Providers } from "./provider";
 
 export const metadata: Metadata = {
-  title: "Blog Site",
-  description: "Linux and programming blog site.",
+  title: "mNotes",
+  description: "Notes and todos editor and creator",
 };
 
 export default function RootLayout({

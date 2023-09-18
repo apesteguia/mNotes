@@ -23,15 +23,30 @@ function EditorWithProps(props: any) {
   const [focus, setFocus] = useState(true);
   const [content, setContent] = useState("");
   const supabase = createClientComponentClient();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setContent(props.content[0].content);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = async (e: any) => {
       if (e.ctrlKey && e.key === "s") {
         e.preventDefault();
-        const date = new Date();
+        const date = new Date(); // Obtén la fecha y hora actual
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const seconds = String(date.getSeconds()).padStart(2, "0");
+        const milliseconds = String(date.getMilliseconds()).padStart(3, "0");
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}+00`;
+
         const res = await supabase
           .from("notes")
-          .update([{ content: content, last_edited: date.toDateString() }])
+          .update([{ content: content, last_edited: formattedDate }])
           .eq("id", props.content[0].id);
         enqueueSnackbar("That was easy!", { variant: "success" });
         console.log("bien", content);
@@ -61,10 +76,10 @@ function EditorWithProps(props: any) {
 
   return (
     <div
-      className="fixed right-0 h-full flex overflow-y-auto w-full justify-center"
-      style={{ width: "calc(100% - 170px)" }}
+      className="fixed right-0 h-full flex overflow-y-auto w-full justify-center mt-[60px]"
+      style={{ width: "calc(100% - 220px)" }}
     >
-      <div className="absolute left-[100px] mt-5">
+      <div className="fixed left-[280px] top-[30px]">
         <p className="font-bold">{props.content[0].title}</p>
         <p className="text-sm text-default-400">
           Last edited:{" "}
@@ -80,13 +95,15 @@ function EditorWithProps(props: any) {
       </div>
 
       <MDXEditor
-        placeholder=""
+        placeholder="hola"
         onChange={(e) => {
           setContent(e);
+          if (e.length === 0) setVisible(true);
+          else setVisible(false);
           console.log(content);
         }}
         autoFocus={focus}
-        className="z-10 w-[730px] h-full indent-2 flex"
+        className="z-10 w-[730px] ml-[50px] h-full indent-2 flex"
         markdown={props.content[0].content}
         contentEditableClassName="editor dark-theme darkTheme"
         plugins={[

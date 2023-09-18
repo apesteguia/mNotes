@@ -1,5 +1,6 @@
 "use client";
 import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import Link from "next/link";
 import { IconNotes } from "@tabler/icons-react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
@@ -47,6 +48,8 @@ export default function NotesAccordion(props: any) {
               {notes.length > 0 ? (
                 notes.map((notes, i) => (
                   <Button
+                    as={Link}
+                    href={"/note/" + notes.id}
                     onClick={() => handleButton(notes.id)}
                     color="default"
                     key={notes.id}

@@ -1,5 +1,18 @@
 @import url('@radix-ui/colors/tomatoDark.css');
 @import url('@radix-ui/colors/mauveDark.css');
+
+
+ul, ol {
+    list-style: initial; /* Reset the list-style to the browser's default */
+    margin-left: 1.5rem; /* Add an indentation to the left */
+  }
+  
+  /* Style list items */
+  li {
+    margin-bottom: 0.25rem; /* Add some spacing between list items */
+    list-style-type:disc ; /* Use your desired list style type here */
+    direction: ltr; /* Set the text direction if needed */
+  }
 .editor > h1 {
     font-family: sans-serif;
     font-size: 2.4rem;
