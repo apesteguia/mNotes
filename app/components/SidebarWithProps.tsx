@@ -4,11 +4,10 @@ import { Chip, Kbd, Tooltip } from "@nextui-org/react";
 import { IconSearch } from "@tabler/icons-react";
 import { IconSettings } from "@tabler/icons-react";
 import { IconSquareRoundedPlusFilled } from "@tabler/icons-react";
-import { IconNotes } from "@tabler/icons-react";
 import "../styles/sidebar.css";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import NotesAccordion from "./NotesAccordion";
-import Editor from "./Editor";
+import Search from "./Search";
 
 export default function SidebarWithProps(props: any) {
   const { id } = props.id;
@@ -41,18 +40,8 @@ export default function SidebarWithProps(props: any) {
           Notes of <p className=" capitalize">{username || "Loading..."}</p>{" "}
         </h1>
       </div>
-      <div className="ml-3 mt-4  w-[90%] flex flex-col text-sm text-zinc-400">
-        <Tooltip
-          placement="right"
-          content="Search and quickly jump to a note "
-          color="default"
-          className="text-sm sidebar dark"
-        >
-          <div className="flex gap-1 cursor-pointer transition duration-300 hover:bg-neutral-700    rounded-md p-2 items-center">
-            <IconSearch size={14} />
-            <p>Search</p>
-          </div>
-        </Tooltip>
+      <div className="ml-3 mt-12  w-[90%] flex flex-col text-sm text-zinc-400">
+        <Search />
 
         <Tooltip
           placement="right"
