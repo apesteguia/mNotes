@@ -16,7 +16,8 @@ import {
 import "../styles/editor.css";
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Button } from "@nextui-org/react";
+import { Button, divider } from "@nextui-org/react";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 function EditorWithProps(props: any) {
   const [focus, setFocus] = useState(true);
@@ -32,6 +33,7 @@ function EditorWithProps(props: any) {
           .from("notes")
           .update([{ content: content, last_edited: date.toDateString() }])
           .eq("id", props.content[0].id);
+        enqueueSnackbar("That was easy!", { variant: "success" });
         console.log("bien", content);
       }
     };
@@ -102,6 +104,7 @@ function EditorWithProps(props: any) {
           markdownShortcutPlugin(),
         ]}
       />
+      <SnackbarProvider />
     </div>
   );
 }
