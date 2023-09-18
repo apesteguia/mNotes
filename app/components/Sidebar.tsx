@@ -8,9 +8,11 @@ import { IconNotes } from "@tabler/icons-react";
 import "../styles/sidebar.css";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import NotesAccordion from "./NotesAccordion";
+import Editor from "./Editor";
 
 export default function Sidebar() {
   const [username, setUsername] = useState<any[]>([]);
+  const [triggerEditor, setTriggerEditor] = useState("");
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -23,6 +25,12 @@ export default function Sidebar() {
 
     get_username();
   }, []);
+
+  const handleId = (id: string) => {
+    if (id != null) {
+      setTriggerEditor(id);
+    }
+  };
 
   return (
     <div className="fixed h-full resize-x min-w-[240px] sidebar border border-zinc-700 flex flex-col ">
@@ -80,7 +88,8 @@ export default function Sidebar() {
           </div>
         </Tooltip>
       </div>
-      <NotesAccordion />
+      <NotesAccordion onNoteSelected={handleId} />
+      <Editor triggerEditor={triggerEditor} />
     </div>
   );
 }
