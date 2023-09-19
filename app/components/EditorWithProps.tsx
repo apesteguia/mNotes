@@ -98,7 +98,7 @@ function EditorWithProps(props: any) {
       </div>
 
       <MDXEditor
-        placeholder="hola"
+        placeholder=""
         onChange={(e) => {
           setContent(e);
           if (e.length === 0) setVisible(true);

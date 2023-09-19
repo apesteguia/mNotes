@@ -83,7 +83,6 @@ export default function Sidebar() {
         </Tooltip>
       </div>
       <NotesAccordion />
-      <Editor triggerEditor={triggerEditor} />
     </div>
   );
 }

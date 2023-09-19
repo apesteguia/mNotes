@@ -8,6 +8,7 @@ import "../styles/sidebar.css";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import NotesAccordion from "./NotesAccordion";
 import Search from "./Search";
+import NewNote from "./NewNote";
 
 export default function SidebarWithProps(props: any) {
   const { id } = props.id;
@@ -73,8 +74,7 @@ export default function SidebarWithProps(props: any) {
           className="text-sm dark sidebar"
         >
           <div className="flex gap-1 transition cursor-pointer duration-300 hover:bg-neutral-700 rounded-md p-2 items-center">
-            <IconSquareRoundedPlusFilled size={14} />
-            <p>New Page</p>
+            <NewNote />
           </div>
         </Tooltip>
       </div>
