@@ -30,7 +30,7 @@ function EditorWithProps(props: any) {
   useEffect(() => {
     setContent(props.content[0].content);
     console.log("content updated" + content);
-  }, [setContent]);
+  }, [setContent, props.content, content]);
 
   useEffect(() => {
     const handleKeyDown = async (e: any) => {
@@ -60,7 +60,7 @@ function EditorWithProps(props: any) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [content]);
+  }, [content, props.content, supabase]);
 
   const simpleSandpackConfig: SandpackConfig = {
     defaultPreset: "dark",

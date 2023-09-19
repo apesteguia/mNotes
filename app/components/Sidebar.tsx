@@ -24,7 +24,7 @@ export default function Sidebar() {
     };
 
     get_username();
-  }, []);
+  }, [supabase]);
 
   return (
     <div className="fixed h-full resize-x min-w-[240px] sidebar border border-zinc-700 flex flex-col ">

@@ -30,9 +30,9 @@ export default function Search(props: any) {
         e.preventDefault(); // Evita el comportamiento predeterminado del navegador
 
         if (isOpen) {
-          onOpenChange(false);
+          onOpenChange();
         } else {
-          onOpenChange(true);
+          onOpenChange();
         }
       }
     };

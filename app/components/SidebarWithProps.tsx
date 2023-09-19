@@ -25,7 +25,7 @@ export default function SidebarWithProps(props: any) {
     };
 
     get_username();
-  }, []);
+  }, [supabase]);
 
   const handleId = (id: string) => {
     if (id != null) {

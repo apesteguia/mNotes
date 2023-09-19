@@ -16,7 +16,7 @@ export default function NotesAccordion(props: any) {
       if (data) setNotes(data);
     };
     fetchNotes();
-  }, [setNotes]);
+  }, [supabase, setNotes]);
 
   const handleButton = (id: string) => {
     props.onNoteSelected(id);
