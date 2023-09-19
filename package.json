@@ -11,6 +11,8 @@
   "dependencies": {
     "@mdxeditor/editor": "^1.0.0",
     "@nextui-org/react": "^2.1.13",
+    "@supabase/auth-helpers-nextjs": "^0.8.1",
+    "@supabase/supabase-js": "^2.33.2",
     "@tabler/icons-react": "^2.34.0",
     "@types/node": "20.6.2",
     "@types/react": "18.2.21",
